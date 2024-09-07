@@ -1,0 +1,23 @@
+{
+  "name": "senpaibot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prebuild": "del /q dist",
+    "build": "esbuild index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js",
+    "deploy": "npm run build && aws lambda update-function-code --function-name DiscordBot-Senpai --zip-file \"fileb://dist/index.zip\"",
+    "postbuild": "cd dist && 7z a -tzip index.zip index.js*"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.145",
+    "esbuild": "^0.23.1"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "discord.js": "^14.16.1",
+    "dotenv": "^16.4.5"
+  }
+}
